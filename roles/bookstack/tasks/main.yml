@@ -1,0 +1,70 @@
+---
+  # Tasks: BookStack
+  #
+  # Author: Luc Rutten
+  # Version: 1.0
+
+  - name:"[APT] Install packages"
+    become: true
+    apt:
+      name: "{{ item }}"
+      update_cache: yes
+      state: present
+    with_items:
+      - zip
+      - unzip
+      - git
+      - nginx
+      - curl
+      - php7.0-fpm
+      - php7.0-curl
+      - php7.0-mbstring
+      - php7.0-ldap
+      - php7.0-mcrypt
+      - php7.0-tidy
+      - php7.0-xml
+      - php7.0-zip
+      - php7.0-gd
+      - php7.0-mysql
+      - mcrypt
+
+   - name: "Create initial BookStack MySQL database"
+     mysql_db:
+       name: "{{ bst_dbname }}"
+       encoding: utf8
+       state: present
+       login_user: "{{ MySQL_ROOT_ACCOUNT }}"
+       login_password: "{{ MySQL_ROOT_PASSWORD }}"
+
+  - name: "Create BookStack MySQL database user"
+    mysql_user:
+      name: "{{ bst_dbuser }}"
+      password: "{{ bst_dbpass }}"
+      priv: "{{zbx_dbname }}.*:ALL,GRANT"
+      state: present
+      login_user: "{{ MySQL_ROOT_ACCOUNT }}"
+      login_password: "{{ MySQL_ROOT_PASSWORD }}"
+
+  - name: "Download BookStack from git"
+    git:
+      repo: 'https://github.com/BookStackApp/BookStack.git'
+      dest: /var/www/html/bookstack
+      update: no
+
+  - name: "Download template composer script"
+    template:
+      src: install_composer.sh.j2
+      dest: /opt/install_composer.sh
+      mode: 0755
+
+  - name: "Excecute template /opt/install_composer.sh"
+    script: /opt/install_composer.sh
+
+  - name: "Set file and folder permissions"
+    file:
+      path: /boot/cache public/uploads
+      owner: www-data
+      group: www-data
+      mode: 0755
+      recurse: yes
+      state: directory

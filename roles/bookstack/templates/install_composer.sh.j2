@@ -1,0 +1,29 @@
+#!/bin/bash
+
+EXPECTED_SIGNATURE=$(wget https://composer.github.io/installer.sig -O - -q)
+curl -s https://getcomposer.org/installer > composer-setup.php
+ACTUAL_SIGNATURE=$(php -r "echo hash_file('SHA384', 'composer-setup.php');")
+
+if [ "$EXPECTED_SIGNATURE" = "$ACTUAL_SIGNATURE" ]
+then
+    php composer-setup.php --quiet
+    RESULT=$?
+    rm composer-setup.php
+else
+    >&2 echo 'ERROR: Invalid composer installer signature'
+    rm composer-setup.php
+    exit 1
+fi
+
+# Install BookStack composer dependancies
+php composer.phar install
+
+# Copy and update BookStack environment variables
+cp .env.example .env
+sed -i.bak 's/DB_DATABASE=.*$/DB_DATABASE={{ bst_dbname }}/' .env
+sed -i.bak 's/DB_USERNAME=.*$/DB_USERNAME={{ bst_dbuser }}/' .env
+sed -i.bak "s/DB_PASSWORD=.*\$/DB_PASSWORD={{ bst_dbpass }}/" .env
+# Generate the application key
+php artisan key:generate --no-interaction --force
+# Migrate the databases
+php artisan migrate --no-interaction --force
