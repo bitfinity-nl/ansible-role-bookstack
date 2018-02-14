@@ -5,10 +5,10 @@
   # Version: 1.0
 
   # BookStack default veriable(s)
-  - bst_dbname: bookstack
-  - bst_dbuser: bookstack
-  - bst_dbpass: B00kstAck # Change me
+  bst_dbname: bookstack
+  bst_dbuser: bookstack
+  bst_dbpass: B00kstAck # Change me
 
   # MySQL server default variable(s)
-  - MySQL_ROOT_ACCOUNT: root
-  - MySQL_ROOT_PASSWORD: MySQK01Password # Change me
+  MySQL_ROOT_ACCOUNT: root
+  MySQL_ROOT_PASSWORD: MySQK01Password # Change me

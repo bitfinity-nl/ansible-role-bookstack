@@ -4,8 +4,7 @@
   # Author: Luc Rutten
   # Version: 1.0
 
-  - name:"[APT] Install packages"
-    become: true
+  - name: "Install packages"
     apt:
       name: "{{ item }}"
       update_cache: yes
@@ -28,19 +27,19 @@
       - php7.0-mysql
       - mcrypt
 
-   - name: "Create initial BookStack MySQL database"
-     mysql_db:
-       name: "{{ bst_dbname }}"
-       encoding: utf8
-       state: present
-       login_user: "{{ MySQL_ROOT_ACCOUNT }}"
-       login_password: "{{ MySQL_ROOT_PASSWORD }}"
+  - name: "Create initial BookStack MySQL database"
+    mysql_db:
+      name: "{{ bst_dbname }}"
+      encoding: utf8
+      state: present
+      login_user: "{{ MySQL_ROOT_ACCOUNT }}"
+      login_password: "{{ MySQL_ROOT_PASSWORD }}"
 
   - name: "Create BookStack MySQL database user"
     mysql_user:
       name: "{{ bst_dbuser }}"
       password: "{{ bst_dbpass }}"
-      priv: "{{zbx_dbname }}.*:ALL,GRANT"
+      priv: "{{ bst_dbname }}.*:ALL,GRANT"
       state: present
       login_user: "{{ MySQL_ROOT_ACCOUNT }}"
       login_password: "{{ MySQL_ROOT_PASSWORD }}"
@@ -57,14 +56,16 @@
       dest: /opt/install_composer.sh
       mode: 0755
 
-  - name: "Excecute template /opt/install_composer.sh"
-    script: /opt/install_composer.sh
-
   - name: "Set file and folder permissions"
     file:
-      path: /boot/cache public/uploads
+      path:  /var/www/html/bookstack/bootstrap/cache public/uploads storage
       owner: www-data
       group: www-data
       mode: 0755
       recurse: yes
       state: directory
+
+  - name: "Excecute template /opt/install_composer.sh"
+    command: sh /opt/install_composer.sh
+    remote_user: ansible
+
