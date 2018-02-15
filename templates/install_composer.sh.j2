@@ -1,5 +1,9 @@
 #!/bin/bash
 
+BOOKSTACK_DIR="{{ bst_dir }}"
+cd $BOOKSTACK_DIR
+
+# Install composer
 EXPECTED_SIGNATURE=$(wget https://composer.github.io/installer.sig -O - -q)
 curl -s https://getcomposer.org/installer > composer-setup.php
 ACTUAL_SIGNATURE=$(php -r "echo hash_file('SHA384', 'composer-setup.php');")
@@ -27,3 +31,4 @@ sed -i.bak "s/DB_PASSWORD=.*\$/DB_PASSWORD={{ bst_dbpass }}/" .env
 php artisan key:generate --no-interaction --force
 # Migrate the databases
 php artisan migrate --no-interaction --force
+

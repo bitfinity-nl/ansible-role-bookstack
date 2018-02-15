@@ -8,6 +8,7 @@
   bst_dbname: bookstack
   bst_dbuser: bookstack
   bst_dbpass: B00kstAck # Change me
+  bst_dir: /var/www/bookstack
 
   # MySQL server default variable(s)
   MySQL_ROOT_ACCOUNT: root

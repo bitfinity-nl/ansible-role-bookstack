@@ -47,18 +47,20 @@
   - name: "Download BookStack from git"
     git:
       repo: 'https://github.com/BookStackApp/BookStack.git'
-      dest: /var/www/html/bookstack
+      dest: {{ bst_dir }}
       update: no
 
   - name: "Download template composer script"
     template:
       src: install_composer.sh.j2
-      dest: /opt/install_composer.sh
+      dest: /home/ansible/install_composer.sh
+      owner: ansible
+      group: sudo
       mode: 0755
 
   - name: "Set file and folder permissions"
     file:
-      path:  /var/www/html/bookstack/bootstrap/cache public/uploads storage
+      path:  {{ bst_dir }}/bootstrap/cache public/uploads storage
       owner: www-data
       group: www-data
       mode: 0755
@@ -66,6 +68,8 @@
       state: directory
 
   - name: "Excecute template /opt/install_composer.sh"
-    command: sh /opt/install_composer.sh
-    remote_user: ansible
+    shell: /home/ansible/install_composer.sh
+    #become: true
+    #become_method: su
+    #become_user: ansible
 
