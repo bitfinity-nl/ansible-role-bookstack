@@ -1,9 +1,0 @@
----
-  # Playbook: Install Bookstack on Ubuntu.
-  #
-  # Author: Luc Rutten
-  # Version: 1.0
-  #
-  # (Original) Source:
-  #   - https://www.bookstackapp.com/
-  #   - https://knpuniversity.com/screencast/ansible/ansible-composer

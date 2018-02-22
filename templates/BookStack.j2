@@ -1,0 +1,18 @@
+server {
+  listen 80;
+  listen [::]:80;
+
+  server_name {{ bst_domain }};
+
+  root {{ bst_dir }}public;
+  index index.php index.html;
+
+  location / {
+    try_files $uri $uri/ /index.php?$query_string;
+  }
+  
+  location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+  }
+}

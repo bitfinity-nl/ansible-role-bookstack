@@ -3,3 +3,8 @@
   #
   # Author: Luc Rutten
   # Version: 1.0
+  
+  - name: restart_nginx
+    service:
+      name: nginx
+      state: restarted
