@@ -62,7 +62,7 @@ Automate bookstack on ubuntu 16.04lts
      
      bst_ldap_dn              : svc_bookstack@vgg.local
      
-     bst_ldap_pass            : HetisEenLeukeApp!
+     bst_ldap_pass            : Bookstack123!
      
      bst_ldap_user_filter     : (&(samaccountname=${user}))
      
