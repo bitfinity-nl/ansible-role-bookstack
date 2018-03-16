@@ -16,3 +16,23 @@
   # MySQL server default variable(s)
   MySQL_ROOT_ACCOUNT: root
   MySQL_ROOT_PASSWORD: MySQK01Password # Change me
+
+
+  ## General auth
+  bst_auth_method      : standard
+
+  ## LDAP settings
+  bst_ldap_server      : false
+  bst_ldap_basedn      : false
+  bst_ldap_dn          : false
+  bst_ldap_pass        : false
+  bst_ldap_user_filter : false
+  bst_ldap_version     : false
+
+  ## Mail settings
+  bst_mail_driver      : smtp
+  bst_mail_host        : localhost
+  bst_mail_port        : 1025
+  bst_mail_username    : null
+  bst_mail_password    : null
+  bst_mail_encryption  : null
