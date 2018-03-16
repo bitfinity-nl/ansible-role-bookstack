@@ -72,6 +72,7 @@
     copy:
       src: /home/ansible/composer.phar
       dest: "{{ bst_dir }}"
+      remote_src: yes
  
   - name: "Install composer"
     shell: composer install -d {{ bst_dir }}
