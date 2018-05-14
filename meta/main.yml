@@ -1,5 +1,18 @@
----
-  # Meta: BookStack
-  #
-  # Author: Luc Rutten
-  # Version: 1.0
+galaxy_info:
+  author: L. Rutten
+  description: Install Bookstack on Ubuntu
+  company: Bitfinity-NL
+  license: MIT
+  min_ansible_version: 2.4
+  platforms:
+  - name: Ubuntu
+    versions:
+    - xenial
+    - bionic
+  galaxy_tags:
+    - Ubuntu
+    - Bionic
+    - Xenial
+    - Bookstack
+    - Documentation
+    - Wiki

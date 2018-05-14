@@ -5,18 +5,19 @@
   # Version: 1.0
 
   # BookStack default veriable(s)
-  bst_dbname: bookstack
-  bst_dbuser: bookstack
-  bst_dbpass: B00kstAck # Change me
+  bst_dbname           : bookstack
+  bst_dbuser           : bookstack
+  bst_dbpass           : B00kstAck # Change me
 
-  bst_domain: "{{ ansible_hostname }}"
-  bst_dir: /var/www/BookStack/
+  bst_domain           : "http://{{ ansible_hostname }}"
+  bst_dir              : /var/www/BookStack/
 
+  bst_upload_size      : 10m
+  bst_upload_timeout   : 120s
 
   # MySQL server default variable(s)
-  MySQL_ROOT_ACCOUNT: root
-  MySQL_ROOT_PASSWORD: MySQK01Password # Change me
-
+  MySQL_ROOT_ACCOUNT   : root
+  MySQL_ROOT_PASSWORD  : MySQK01Password # Change me
 
   ## General auth
   bst_auth_method      : standard

@@ -4,6 +4,9 @@ server {
 
   server_name {{ bst_domain }};
 
+  client_max_body_size {{ bst_upload_size }};
+  client_body_timeout {{ bst_upload_timeout }};
+
   root {{ bst_dir }}public;
   index index.php index.html;
 

@@ -68,3 +68,9 @@ Automate bookstack on ubuntu 16.04lts
      
      bst_ldap_email_attribute : mail
 
+
+## Source(s)
+Thanks goes to all the authors and participants from
+the sources below, so I could write this Anisble role.
+
+- https://www.bookstackapp.com/
