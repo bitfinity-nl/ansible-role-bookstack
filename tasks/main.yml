@@ -130,4 +130,9 @@
     notify:
       - restart_nginx
 
+  - name: "Allow traffic from Zabbix frontend on port 80/tcp"
+    ufw:
+      rule: deny
+      port: 80
+      proto: tcp
 
