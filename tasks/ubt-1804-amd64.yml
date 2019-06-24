@@ -1,0 +1,145 @@
+---
+# Tasks: bookstack
+#
+# Author: bitfinity-nl
+# File: tasks/ubt-1804-amd64.yml
+# 
+# Description:
+#   BookStack is a simple, self-hosted, easy-to-use 
+#   platform for organising and storing information.
+#
+
+- name: "Install packages"
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+    state: present   
+  vars:
+    packages:
+    - zip
+    - unzip
+    - git
+    - nginx
+    - curl
+    - php7.2
+    - php7.2-common
+    - php7.2-cli
+    - php7.2-fpm
+    - php7.2-curl
+    - php7.2-mbstring
+    - php7.2-ldap
+#      - php-mcrypt
+    - php7.2-tidy
+    - php7.2-xml
+    - php7.2-zip
+    - php7.2-gd
+    - php7.2-mysql
+    - mcrypt
+    - composer
+
+- name: "Create initial BookStack MySQL database"
+  mysql_db:
+    name: "{{ bst_dbname }}"
+    encoding: utf8
+    state: present
+    login_user: "{{ MySQL_ROOT_ACCOUNT }}"
+    login_password: "{{ MySQL_ROOT_PASSWORD }}"
+
+- name: "Create BookStack MySQL database user"
+  mysql_user:
+    name: "{{ bst_dbuser }}"
+    password: "{{ bst_dbpass }}"
+    priv: "{{ bst_dbname }}.*:ALL,GRANT"
+    state: present
+    login_user: "{{ MySQL_ROOT_ACCOUNT }}"
+    login_password: "{{ MySQL_ROOT_PASSWORD }}"
+
+- name: "Download composer"
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: /home/ansible/installer
+
+- name: "Run Installer"
+  shell: php /home/ansible/installer
+
+- name: "Download BookStack from git to: {{ bst_dir }}"
+  git:
+    repo: 'https://github.com/BookStackApp/BookStack.git'
+    version: release
+    dest: "{{ bst_dir }}"
+    update: true
+
+- name: "Download to .env.example to {{ bst_dir }} "
+  template:
+    src: .env.example.j2
+    dest: "{{ bst_dir }}/.env"
+
+- name: "mv composer.phar from /home/ansible to {{ bst_dir }}"
+  copy:
+    src: /home/ansible/composer.phar
+    dest: "{{ bst_dir }}"
+    remote_src: yes
+ 
+- name: "Install composer"
+  shell: composer install -d {{ bst_dir }}
+
+- name: "Generate the application key"
+  shell: php {{ bst_dir }}/artisan key:generate --no-interaction --force
+
+- name: "Migrate the database"
+  shell: php {{ bst_dir }}/artisan migrate --no-interaction --force
+ 
+- name: "Set file and folder permissions on: {{ bst_dir }}/bootstrap/cache"
+  file:
+    path: "{{ bst_dir }}/bootstrap/cache"
+    owner: www-data
+    group: www-data
+    mode: 0755
+    recurse: yes
+    state: directory
+
+- name: "Set file and folder permissions on: {{ bst_dir }}/public/uploads"
+  file:
+    path: "{{ bst_dir }}/public/uploads"
+    owner: www-data
+    group: www-data
+    mode: 0755
+    recurse: yes
+    state: directory
+
+- name: "Set file and folder permissions on: {{ bst_dir }}/storage"
+  file:
+    path: "{{ bst_dir }}/storage"
+    owner: www-data
+    group: www-data
+    mode: 0755
+    recurse: yes
+    state: directory
+
+- name: "Download NGINX config file" 
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: '1804/BookStack.j2', dest: '/etc/nginx/sites-available/BookStack' }
+
+- name: "Symlink to NGINX sites-enabled" 
+  file:
+    src: /etc/nginx/sites-available/BookStack
+    dest: /etc/nginx/sites-enabled/BookStack
+    state: link
+  notify:
+    - restart_nginx
+
+- name: "Remove Default NGINX config file "
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify:
+    - restart_nginx
+
+- name: "Allow traffic on port 80/tcp {{ ansible_hostname }}"
+  ufw:
+    rule: allow
+    port: "80"
+    proto: tcp

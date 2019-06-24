@@ -1,8 +1,8 @@
 galaxy_info:
-  author: L. Rutten
+  author: bitfinity-nl
   description: Install Bookstack on Ubuntu
   company: Bitfinity-NL
-  license: MIT
+  license: GPLv3
   min_ansible_version: 2.4
   platforms:
   - name: Ubuntu

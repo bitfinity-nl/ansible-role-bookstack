@@ -1,5 +1,10 @@
 ---
-  # Vars: BookStack
-  #
-  # Author: Luc Rutten
-  # Version: 1.0
+# Tasks: bookstack
+#
+# Author: bitfinity-nl
+# File: vars/main.yml
+# 
+# Description:
+#   BookStack is a simple, self-hosted, easy-to-use 
+#   platform for organising and storing information.
+#
