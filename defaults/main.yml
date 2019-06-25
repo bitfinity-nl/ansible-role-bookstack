@@ -42,3 +42,19 @@ bst_mail_port        : 1025
 bst_mail_username    : null
 bst_mail_password    : null
 bst_mail_encryption  : null
+
+
+# -- Nginx SSL settings --
+#
+# Variable(s)
+#   bst_ssl_status   : 'disabled' or 'enabled'    # Enable SSL support (default = disabled)
+#   bst_ssl_cert     : '/path/to/ssl/cert.crt'    # Path to SSL certificate
+#   bst_ssl_cert_key : '/path/to/ssl/cert.key'    # Path to SSL certficiate key
+#
+# Comment:
+#   Default uses group vars   
+#
+bst_ssl_status   : 'enabled'
+bst_ssl_cert     : '{{ def_cert_out }}'
+bst_ssl_cert_key : '{{ def_cert_keyout }}'
+

@@ -115,25 +115,21 @@
     recurse: yes
     state: directory
 
-- name: "Download nginx http template" 
+- name: "Download NGINX config file" 
   template:
-    src: 1804/bookstack.j2
-    dest: /etc/nginx/sites-available/bookstack
-  when:
-    - bst_ssl_status == 'disabled'
-
-- name: "Download NGINX config file"
-  template:
-    src: 1804/bookstack-ssl.j2
-    dest: /etc/nginx/sites-available/bookstack-ssl
-  when:
-    - bst_ssl_status == 'enabled'
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: '1804/bookstack.j2', dest: '/etc/nginx/sites-available/bookstack' }
+    - { src: '1804/bookstack-ssl.j2', dest: '/etc/nginx/sites-available/bookstack-ssl' }
 
 - name: "Enable bookstack on http port 80/tcp" 
   file:
-    src: /etc/nginx/sites-available/bookstack
-    dest: /etc/nginx/sites-enabled/bookstack
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     state: link
+  with_items:
+    - { src: '/etc/nginx/sites-available/bookstack', dest: '/etc/nginx/sites-enabled/bookstack' }
   when:
     - bst_ssl_status == 'disabled'
   notify:
@@ -141,9 +137,11 @@
 
 - name: "Enable bookstack on https port 443/tcp"
   file:
-    src: /etc/nginx/sites-available/bookstack-ssl
-    dest: /etc/nginx/sites-enabled/bookStack-ssl
+    src: "
+    dest: "{{ item.dest }}"
     state: link
+  with_items:
+    - { src: '/etc/nginx/sites-available/bookstack-ssl', dest: '/etc/nginx/sites-enabled/bookStack-ssl' }
   when:
     - bst_ssl_status == 'enabled'
   notify:
