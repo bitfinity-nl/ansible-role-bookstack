@@ -1,0 +1,16 @@
+---
+# Tasks: bookstack
+#
+# Author: bitfinity-nl
+# File: tasks/ubt-1804-wkthmltopdf.yml
+# 
+# Description:
+#   As an alternative you can use wkhtmltopdf to generate PDF documents instead. 
+#   wkhtmltopdf uses the Qt WebKit rendering engine to provide a more accurate overall result.
+# 
+
+- name: "Install packages via *.DEB"
+  apt:
+    deb: "{{ bst_wkhtmltopdf_url }}"
+
+

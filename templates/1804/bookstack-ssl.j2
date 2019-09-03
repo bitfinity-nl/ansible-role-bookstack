@@ -8,8 +8,8 @@ server {
 server {
   listen 443 ssl;
   server_name {{ bst_domain }};
-  ssl_certificate {{ bst_ssl_cert }};
-  ssl_certificate_key {{ bst_ssl_cert_key }};
+  ssl_certificate /{{ bst_ssl_cert }};
+  ssl_certificate_key /{{ bst_ssl_cert_key }};
   ssl_stapling on;
   ssl_stapling_verify on;
   ssl_protocols TLSv1.1 TLSv1.2;

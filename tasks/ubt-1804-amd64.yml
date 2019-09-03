@@ -41,8 +41,8 @@
     name: "{{ bst_dbname }}"
     encoding: utf8
     state: present
-    login_user: "{{ MySQL_ROOT_ACCOUNT }}"
-    login_password: "{{ MySQL_ROOT_PASSWORD }}"
+    login_user: "{{ bst_mysql_root }}"
+    login_password: "{{ bst_mysql_pass }}"
 
 - name: "Create BookStack MySQL database user"
   mysql_user:
@@ -50,8 +50,8 @@
     password: "{{ bst_dbpass }}"
     priv: "{{ bst_dbname }}.*:ALL,GRANT"
     state: present
-    login_user: "{{ MySQL_ROOT_ACCOUNT }}"
-    login_password: "{{ MySQL_ROOT_PASSWORD }}"
+    login_user: "{{ bst_mysql_root }}"
+    login_password: "{{ def_mysql_pass }}"
 
 - name: "Download composer"
   get_url:

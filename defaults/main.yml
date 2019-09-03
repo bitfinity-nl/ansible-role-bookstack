@@ -10,38 +10,47 @@
 
 
 # -- BookStack default veriable(s) --
-bst_dbname           : bookstack
-bst_dbuser           : bookstack
-bst_dbpass           : B00kstAck # Change me
+bst_dbname           : 'bookstack'
+bst_dbuser           : 'bookstack'
+bst_dbpass           : 'B00kstAck' # Change me
 
-bst_domain           : "http://{{ ansible_hostname }}"
-bst_dir              : /var/www/BookStack/
+bst_domain           : 'http://{{ ansible_hostname }}'
+bst_dir              : '/var/www/BookStack/'
 
-bst_upload_size      : 10m
-bst_upload_timeout   : 120s
+bst_upload_size      : '10m'
+bst_upload_timeout   : '120s'
 
 # -- MySQL server default variable(s) --
-MySQL_ROOT_ACCOUNT   : root
-MySQL_ROOT_PASSWORD  : MySQK01Password # Change me
+#
+# Variable(s):
+#   bst_mysql_root       : '{{ def_mysql_user }}'   # Set MySQL root account.  
+#   bst_mysql_pass       : '{{ def_mysql_pass }}'   # Set password for MySQL root Account.
+#
+# Comment:
+#   Override variable(s) in your playbook or set them in your groupvars
+#
+bst_mysql_root       : '{{ def_mysql_user }}'
+bst_mysql_pass       : '{{ def_mysql_pass }}'
+
 
 # -- General auth --
-bst_auth_method      : standard
+bst_auth_method      : 'standard'
 
 # --  LDAP settings --
-bst_ldap_server      : false
-bst_ldap_basedn      : false
-bst_ldap_dn          : false
-bst_ldap_pass        : false
-bst_ldap_user_filter : false
-bst_ldap_version     : false
+bst_ldap_server      : 'false'
+bst_ldap_basedn      : 'false'
+bst_ldap_dn          : 'false'
+bst_ldap_pass        : 'false'
+bst_ldap_user_filter : 'false'
+bst_ldap_version     : '3'
 
 # -- Mail settings --
-bst_mail_driver      : smtp
-bst_mail_host        : localhost
-bst_mail_port        : 1025
-bst_mail_username    : null
-bst_mail_password    : null
-bst_mail_encryption  : null
+bst_mail_driver      : 'smtp'
+bst_mail_host        : 'localhost'
+bst_mail_port        : '1025'
+bst_mail_username    : 'null'
+bst_mail_password    : 'null'
+bst_mail_encryption  : 'null'
 
 
 # -- Nginx SSL settings --
@@ -58,3 +67,11 @@ bst_ssl_status   : 'enabled'
 bst_ssl_cert     : '{{ def_cert_out }}'
 bst_ssl_cert_key : '{{ def_cert_keyout }}'
 
+
+# -- Nginx SSL settings --
+#
+# Variable(s)
+#    bst_wkhtmltopdf_url: 'https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb'  # Url to wkhtmltopdf package.
+#
+#
+bst_wkhtmltopdf_url: 'https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb'
