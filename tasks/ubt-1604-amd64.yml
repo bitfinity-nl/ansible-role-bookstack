@@ -139,7 +139,11 @@
   notify:
     - restart_nginx
 
-- name: "Allow traffic from Zabbix frontend on port 80/tcp"
+- name: "Configure UFW firewall for nginx"
   ufw:
     rule: allow
-    name: nginx
+    proto: tcp
+    port: "{{ item }}"
+  with_items:
+    - '80'
+    - '443'
