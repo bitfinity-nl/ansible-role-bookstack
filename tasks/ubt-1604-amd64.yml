@@ -21,18 +21,18 @@
     - git
     - nginx
     - curl
-    - php7.0
-    - php7.0-cli
-    - php7.0-fpm
-    - php7.0-curl
-    - php7.0-mbstring
-    - php7.0-ldap
-    - php7.0-mcrypt
-    - php7.0-tidy
-    - php7.0-xml
-    - php7.0-zip
-    - php7.0-gd
-    - php7.0-mysql
+    - php7.2
+    - php7.2-cli
+    - php7.2-fpm
+    - php7.2-curl
+    - php7.2-mbstring
+    - php7.2-ldap
+    - php7.2-mcrypt
+    - php7.2-tidy
+    - php7.2-xml
+    - php7.2-zip
+    - php7.2-gd
+    - php7.2-mysql
     - mcrypt
     - composer
 
